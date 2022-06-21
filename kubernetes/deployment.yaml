@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: twitter-retweet-bot
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: twitter-retweet-bot
+  replicas: 1
+  progressDeadlineSeconds: 600
+  revisionHistoryLimit: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: twitter-retweet-bot
+      annotations:
+        deploy-date: "deploy-date-value"
+    spec:
+      containers:
+      - name: twitter-retweet-bot
+        image: YOUR_REGISTRY:TAG
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits: 
+            memory: "128Mi"
+            cpu: "250m"
+        envFrom:
+        - secretRef:
+            name: YOUR_SECRETS_REF
+      imagePullSecrets: 
+      - name: YOUR_REGISTRY_PULL_SECRETS
