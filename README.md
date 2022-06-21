@@ -1,6 +1,8 @@
 # techno-boto-twitter
 
-This is a simple twitter bot that will retweet hashtags
+This is a simple twitter bot that will retweet hashtags. Completely automated with GitLab pipelines and GitHub actions, containerized with Docker, and deployed to kubernetes using manifests.
+
+It's the bot that's that is driving [#100DaysOfHomeLab](https://twitter.com/100DaysHomeLab) on Twitter!
 
 Don't forget to ⭐ this repo and fork it too! 👆
 
@@ -19,11 +21,21 @@ ACCESS_TOKEN=123abc
 ACCESS_TOKEN_SECRET=123abc
 ```
 
+To install dependencies:
+
+```bash
+yarn install
+```
+
+To start the bot
+
+```bash
+yarn start
+```
+
 ## Credits
 
 Created by Techno Tim with 💛
-
-🔔 Social Media 🔔
 
 ► Twitch <https://www.twitch.tv/TechnoTim>
 
