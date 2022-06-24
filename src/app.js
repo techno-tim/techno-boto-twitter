@@ -7,6 +7,7 @@ const RESULTS_COUNT = 25
 const LANGUAGE = 'en'
 const RESULT_TYPE = 'recent'
 const tweetedIdList = []
+const ignoredPhrases = ["hacked", "hacker", "bitcoin"]
 
 console.log('Started twitter bot')
 
@@ -37,6 +38,14 @@ const reTweet = async searchText => {
         console.log(`Found tweet in tweetedIdList, will not tweet ${tweet.id_str}`)
         return
       }
+
+      // check if tweet text contains a phrase we want to ignore
+      ignoredPhrases.every((phrase) => {
+        if (tweet.text.toLowerCase().includes(phrase)) {
+          console.log(`Found ignored phrase in tweet text, will not tweet ${tweet.id_str}`);
+          return;
+        }
+      });
 
       tweetIdList.push(tweet.id_str)
 
