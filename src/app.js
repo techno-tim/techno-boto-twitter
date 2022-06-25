@@ -28,6 +28,8 @@ const reTweet = async searchText => {
   }
 
   try {
+    console.log('Getting Blocked user ids')
+    const blockedUserIds = await TwitBot.get('blocks/ids', { stringify_ids: true })
     console.log('Searching for tweets')
     const resp = await TwitBot.get('search/tweets', params)
     const tweets = resp.data.statuses
@@ -40,13 +42,16 @@ const reTweet = async searchText => {
       }
 
       // check if tweet text contains a phrase we want to ignore
-      ignoredPhrases.forEach((phrase) => {
-        if (tweet.text.toLowerCase().includes(phrase.toLowerCase())) {
-          console.log(`Found ignored phrase in tweet text, will not tweet ${tweet.id_str}`)
-        } else {
-          tweetIdList.push(tweet.id_str)
-        }
-      })
+      if (ignoredPhrases.includes(tweet.text)) {
+        console.log(`Found ignored phrase in tweet text, will not tweet ${tweet.id_str}`)
+        return
+      }
+      // check if tweet is from someone that is blocked
+
+      if (blockedUserIds.data.ids.includes(tweet.user.id_str)) {
+        console.info(`Found blocked userId ${tweet.user.id_str}, will not tweet ${tweet.id_str}`)
+        return
+      }
 
       // Check to see if we've already retweeted
       if (tweet.text.startsWith('RT @')) {
