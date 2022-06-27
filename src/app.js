@@ -42,7 +42,7 @@ const reTweet = async searchText => {
       }
 
       // check if tweet text contains a phrase we want to ignore
-      if (ignoredPhrases.includes(tweet.text)) {
+      if (ignoredPhrases.includes(tweet.text.toLowerCase())) {
         console.log(`Found ignored phrase in tweet text, will not tweet ${tweet.id_str}`)
         return
       }
