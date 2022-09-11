@@ -13,7 +13,7 @@ cache: &global_cache
   policy: pull-push
 
 unit_testing:
-  image: node:16.16.0
+  image: node:16.17.0
   stage: test
   cache:
     <<: *global_cache
